@@ -74,12 +74,85 @@ class ButtonPanel extends Component {
     }
 }
 
+const FormInput = styled.input`
+    padding:  3px;
+    margin:   6px;
+    text-align: center;
+    font-family: inherit;
+`;
+
+const FormSelect = styled.select`
+    padding:  3px;
+    margin:   6px;
+    text-align: center;
+    font-family: inherit;
+`;
+
+const ActionButton = styled.button`
+    padding: 5px;
+    margin: 3px;
+    background-color: #ccc;
+    font-size: 110%;
+    font-family: inherit;
+`;
+
 class StartForm extends Component {
+    constructor(props) {
+        super(props);
+        this.state = { nameValue: "", langValue: "en" };
+        this.onNameChange = this.onNameChange.bind(this);
+        this.onLangChange = this.onLangChange.bind(this);
+        this.clickWrapper = this.clickWrapper.bind(this);
+    };
+
+    onNameChange(event) {
+        this.setState({ nameValue: event.target.value });
+    };
+
+    onLangChange(event) {
+        this.setState({ langValue: event.target.value });
+    };
+
+    clickWrapper(event) {
+        const { nameValue, langValue } = this.state;
+        this.props.clickStart(nameValue, langValue);
+    };
+    
     render() {
-        return <div>Start Form</div>;
+        const { clickWrapper, onNameChange, onLangChange } = this;
+        const { nameValue, langValue } = this.state;
+                
+        return <div>
+                 <form>
+                   <label htmlFor="nameInput">Enter your name</label>
+                   <FormInput
+                     value={nameValue}
+                     type="text"
+                     name="name"
+                     onChange={onNameChange}
+                   />
+                   <br/>
+                   <label htmlFor="languageInput">Choose a Language</label>
+                   <FormSelect
+                     onChange={onLangChange}
+                     value={langValue}
+                     id="languageInput"
+                     name="language">
+                     <option value="en">English</option>
+                     <option value="fr">French</option>
+                     <option value="es">Spanish</option>
+                   </FormSelect>
+                   <br/>
+                   <ActionButton
+                     type="button"
+                     onClick={clickWrapper}
+                   >
+                     Start a Game
+                   </ActionButton>
+                 </form>
+               </div>;
     }
 }
-
 class PlayAgainPanel extends Component {
     render() {
         return <div>Play Again Panel</div>;

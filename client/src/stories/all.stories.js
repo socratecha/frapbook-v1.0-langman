@@ -41,7 +41,15 @@ storiesOf('Button-related Components', module)
           <ButtonPanel onGuess={action('guessed')} usedLetters="mondieu"/>
         </div>
     ))
-    .add('StartForm', () => <StartForm />)
+    .add('StartForm', () => (
+        <div>
+          <h2>StartForm(clickStart)</h2>
+          <ul>
+            <li>ClickStart - game starting callback, takes name and language</li>
+          </ul>
+          <StartForm clickStart={action('start-game')} />
+        </div>
+    ))
     .add('PlayAgainPanel', () => <PlayAgainPanel />)
 ;
 
