@@ -50,6 +50,27 @@ storiesOf('Button-related Components', module)
           <StartForm clickStart={action('start-game')} />
         </div>
     ))
-    .add('PlayAgainPanel', () => <PlayAgainPanel />)
+    .add('PlayAgainPanel', () => (
+        <div>
+          <h2>PlayAgainPanel(lang, clickPlayAgain)</h2>
+          <ul>
+            <li>lang - the language in which the last game was played</li>
+            <li>clickPlayAgain - callback taking the new language choice</li>
+            <li>clickQuit - callback to quit playing</li>
+          </ul>
+          <h3>Default English</h3>
+          <PlayAgainPanel
+            lang="en"
+            clickPlayAgain={action('play-again')}
+            clickQuit={action('quit-game')}
+          />
+          <h3>Default French</h3>
+          <PlayAgainPanel
+            lang="fr"
+            clickPlayAgain={action('play-again')}
+            clickQuit={action('quit-game')}
+          />
+        </div>
+    ))
 ;
 

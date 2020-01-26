@@ -154,9 +154,53 @@ class StartForm extends Component {
     }
 }
 class PlayAgainPanel extends Component {
-    render() {
-        return <div>Play Again Panel</div>;
-    }
-}
+    constructor(props) {
+        super(props);
+        this.state = { langValue: props.lang };
+        this.onLangChange = this.onLangChange.bind(this);
+        this.clickWrapper = this.clickWrapper.bind(this);
+    };
 
+    onLangChange(event) {
+        this.setState({ langValue: event.target.value });
+    }
+
+    clickWrapper(event) {
+        const { langValue } = this.state;
+        this.props.clickPlayAgain(langValue);
+    };
+    
+    render() {
+        const { clickWrapper, onLangChange } = this;
+        const { langValue } = this.state;
+        const { clickQuit } = this.props;
+                
+        return <div>
+                 <form>
+                   <label htmlFor="languageInput">
+                     Choose a Language
+                   </label>
+                   <FormSelect
+                     onChange={onLangChange}
+                     value={langValue}
+                     id="languageInput"
+                     name="language">
+                     <option value="en">English</option>
+                     <option value="fr">French</option>
+                     <option value="es">Spanish</option>
+                   </FormSelect>
+                   <ActionButton
+                     type="button"
+                     onClick={clickWrapper}>
+                     Play Again
+                   </ActionButton>
+                   <ActionButton
+                     type="button"
+                     onClick={clickQuit}>
+                     Quit
+                   </ActionButton>
+                 </form>
+               </div>;
+    }
+} 
 export { LetterButton, ButtonPanel, StartForm, PlayAgainPanel };
