@@ -4,6 +4,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 from .langman_orm import base_games, base_usage, Usage
+from .auth_orm import base as base_auth
 from .util import get_config
 
 import click
@@ -18,6 +19,9 @@ def init_db():
     base_usage.metadata.create_all(db_usage)
     db_games   = create_engine(config['DB_GAMES'])
     base_games.metadata.create_all(db_games)
+
+    db_auth   = create_engine(config['DB_AUTH'])
+    base_auth.metadata.create_all(db_auth)
 
     Session = sessionmaker(db_usage)
     session = Session()
