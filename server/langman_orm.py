@@ -2,8 +2,9 @@ from sqlalchemy import create_engine, Column, types, MetaData, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 meta = MetaData()
 base_games = declarative_base(meta)
+base_usage = declarative_base(meta)
 
-class Usage(base_games):
+class Usage(base_usage):
     '''Table ``usages`` with fields:
       * ``usage_id`` - UUID primary key string of length 38
       * ``language`` - Two-letter language code (en, es, fr)
@@ -15,7 +16,7 @@ class Usage(base_games):
     usage_id    = Column(types.Integer, primary_key=True)
     language    = Column(types.Enum("en","es","fr", name='language_codes'), nullable=False)
     secret_word = Column(types.String(length=25), nullable=False)
-    usage       = Column(types.String(length=500), nullable=False)
+    usage       = Column(types.String(length=400), nullable=False)
     source      = Column(types.String(length=100))
 
 class User(base_games):

@@ -3,7 +3,7 @@ import csv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from .langman_orm import base_games, Usage
+from .langman_orm import base_games, base_usage, Usage
 from .util import get_config
 
 import click
@@ -14,10 +14,12 @@ app = Flask(__name__)
 @app.cli.command('init-db')
 def init_db():
     config = get_config(os.environ['FLASK_ENV'], open('server/config.yaml'))
-    db   = create_engine(config['DB'])
-    base_games.metadata.create_all(db)
-                
-    Session = sessionmaker(db)
+    db_usage   = create_engine(config['DB_USAGE'])
+    base_usage.metadata.create_all(db_usage)
+    db_games   = create_engine(config['DB_GAMES'])
+    base_games.metadata.create_all(db_games)
+
+    Session = sessionmaker(db_usage)
     session = Session()
     if session.query(Usage).count() == 0:
         data = []
