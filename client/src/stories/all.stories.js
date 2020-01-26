@@ -6,6 +6,7 @@ import { addDecorator } from '@storybook/react';
 
 import { LetterButton, ButtonPanel, StartForm, PlayAgainPanel } from '../buttons';
 import { Banner, ResultBanner, UsageAndBlanks } from '../components';
+import { Gallows } from '../gallows';
 import { GlobalStyle } from '../fonts';
 addDecorator(s => <><GlobalStyle />{s()}</>);
 
@@ -124,6 +125,28 @@ storiesOf('Banners and Displays', module)
             blanks="gloomy"
             showBlanks={false}
           />
+        </div>
+    ))
+;
+storiesOf('Gallows', module)
+    .add('Gallows description', () => (
+        <div>
+          <h2>Gallows(badGuesses)</h2>
+          <ul>
+            <li>badGuesses - number (0 to 6) of parts to draw</li>
+          </ul>
+          <Gallows />
+        </div>
+    ))
+    .add('Gallows gallery', () => (
+        <div>
+          <Gallows badGuesses={6}/>
+          <Gallows badGuesses={5}/>
+          <Gallows badGuesses={4}/>
+          <Gallows badGuesses={3}/>
+          <Gallows badGuesses={2}/>
+          <Gallows badGuesses={1}/>
+          <Gallows badGuesses={0}/>
         </div>
     ))
 ;
