@@ -103,5 +103,27 @@ storiesOf('Banners and Displays', module)
           <ResultBanner winResult={false}/>
         </div>
     ))
-    .add('UsageAndBlanks', () => <UsageAndBlanks />)
+    .add('UsageAndBlanks', () => (
+        <div>
+          <h2>UsageAndBlanks(usage, blanks, showBlanks)</h2>
+          <p>This component uses the non-React function prepareUsage.</p>
+          <ul>
+            <li>usage - usage example with guess word as underscores</li>
+            <li>blanks - guessed/non-guessed letters, like "h_ml_t"</li>
+            <li>showBlanks - whether to show blanks separately or in usage</li>
+          </ul>          
+          <h3>With blanks</h3>
+          <UsageAndBlanks
+            usage="The sky loomed dark and ______."
+            blanks="__oo_y"
+            showBlanks={true}
+          />
+          <h3>Without blanks</h3>
+          <UsageAndBlanks
+            usage="The sky loomed dark and ______."
+            blanks="gloomy"
+            showBlanks={false}
+          />
+        </div>
+    ))
 ;

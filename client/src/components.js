@@ -55,9 +55,46 @@ class ResultBanner extends Component {
     }
 }
 
-class UsageAndBlanks extends Component {
+const InUsageSpan = styled.span`
+    text-decoration: ${props => props.showBlanks ? "none" : "underline" };
+    padding-left: 0.3em;
+    padding-right: 0.3em;
+    display: inline-block;
+`;
+
+/* Create the new usage example based on what goes in the blanks */
+function prepareUsage(usage, blanks, showBlanks) {
+    const [ beforeBlanks, afterBlanks ] = usage.split(/_+/);
+    const newBlanks    = (showBlanks ? blanks.replace(/./g,'_') : blanks);
+
+    return <p>
+             { beforeBlanks }
+             <InUsageSpan showBlanks={showBlanks}>
+               { newBlanks }
+             </InUsageSpan>
+             { afterBlanks }
+           </p>;     
+}
+
+const BlanksDiv = styled.div`
+    letter-spacing: 0.3em;
+    font-size: 1.5em;
+    text-align: center;
+`;
+
+class UsageAndBlanks extends Component {    
     render() {
-        return <div>Usage And Blanks</div>;
+        const { usage, blanks, showBlanks } = this.props;
+        const newUsage = prepareUsage(usage, blanks, showBlanks);
+        const newBlanks = <BlanksDiv>{blanks}</BlanksDiv>;
+        
+        return (
+            <div>
+              { newUsage }
+              { showBlanks && newBlanks }
+            </div>
+        );
     }
 }
+
 export { Banner, ResultBanner, UsageAndBlanks };
