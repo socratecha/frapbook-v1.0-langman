@@ -8,11 +8,23 @@ games_api = Namespace('games', description='Creating and playing games')
 
 @games_api.route('')
 class Games(Resource):
-    pass
+    def post(self):
+        '''Create a new game and return the game id'''
+        return {'message': 'Games POST under construction'}
 
 @games_api.route('/<game_id>')
 class OneGame(Resource):
-    pass
+    def get(self, game_id):
+        '''Get the state of the game'''
+        return {'message': 'Game GET under construction'}
+
+    def put(self, game_id):
+        '''Guess a letter and update the game state accordingly'''
+        return {'message': 'Game PUT under construction'}
+        
+    def delete(self, game_id):
+        '''End the game, delete the record'''
+        return {'message': 'Game DELETE under construction'}
 
 # Create the app and configure it
 app = Flask(__name__)                       # Create Flask app
