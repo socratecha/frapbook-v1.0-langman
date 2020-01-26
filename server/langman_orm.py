@@ -39,3 +39,24 @@ class User(base_games):
     total_time     = Column(types.Interval)
     avg_time       = Column(types.Interval)
 
+class Game(base_games):
+    '''Table ``games`` with fields:
+      * ``game_id`` - UUID primary key of length 38
+      * ``player`` - Player key from ``users`` table, length 38
+      * ``usage_id`` - Integer index usage in ``usages`` table
+      * ``guessed`` - A string of the letters guessed so far
+      * ``reveal_word`` - Secret word with guessed letters filled in
+      * ``bad_guesses`` - Number of bad guesses so far as an integer
+      * ``start_time`` - DateTime indicating when the game started
+      * ``end_time`` - DateTime indicating when the game ended
+    '''
+    __tablename__ = 'games'
+    game_id     = Column(types.String(length=38), primary_key=True)
+    player      = Column(types.String(length=38), nullable=False)
+    usage_id    = Column(types.Integer, nullable=False)
+    guessed     = Column(types.String(length=30), default='')
+    reveal_word = Column(types.String(length=25), nullable=False)
+    bad_guesses = Column(types.Integer)
+    start_time  = Column(types.DateTime)
+    end_time    = Column(types.DateTime)
+
