@@ -7,6 +7,7 @@ import { addDecorator } from '@storybook/react';
 import { LetterButton, ButtonPanel, StartForm, PlayAgainPanel } from '../buttons';
 import { Banner, ResultBanner, UsageAndBlanks } from '../components';
 import { Gallows } from '../gallows';
+import { SignInScreen, WinScreen, LoseScreen, PlayScreen } from '../screens';
 import { GlobalStyle } from '../fonts';
 addDecorator(s => <><GlobalStyle />{s()}</>);
 
@@ -147,6 +148,18 @@ storiesOf('Gallows', module)
           <Gallows badGuesses={2}/>
           <Gallows badGuesses={1}/>
           <Gallows badGuesses={0}/>
+        </div>
+    ))
+;
+
+storiesOf('Screens', module)
+    .add('SignInScreen', () => (
+        <div>
+          <h2>SignInScreen(clickStart)</h2>
+          <ul>
+            <li>clickStart - game-starting callback; gets name, language</li>
+          </ul>
+          <SignInScreen clickStart={action('start-game')}/>
         </div>
     ))
 ;
