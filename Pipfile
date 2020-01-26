@@ -12,6 +12,7 @@ flask = "*"
 flask-restplus = "*"
 flask-cors = "*"
 psycopg2-binary = "*"
+unidecode = "*"
 
 [requires]
 python_version = "3.7"
