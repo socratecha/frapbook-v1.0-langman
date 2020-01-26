@@ -153,7 +153,36 @@ class LoseScreen extends Component {
     }           
 }
 class PlayScreen extends Component {
-    render() { return <h2>Play Screen</h2>; }
+    render() {
+        const { usage, blanks, usedLetters, numBadGuesses, onGuess } = this.props;
+        return (
+            <FortySixtyGrid>
+              <FullWidthDiv>
+                <Banner full={false}/>
+              </FullWidthDiv>
+              <PositionDiv
+                row={"2 / 4"}
+                column={1}
+                style={{textAlign: 'right', margin: 'auto'}}
+              >
+                <Gallows badGuesses={numBadGuesses}/>
+              </PositionDiv>
+              <PositionDiv row={2} column={2}>
+                <UsageAndBlanks
+                  usage={usage}
+                  blanks={blanks}
+                  showBlanks={true}
+                />
+              </PositionDiv>
+              <PositionDivCentered row={3} column={2}>
+                <ButtonPanel
+                  usedLetters={usedLetters}
+                  onGuess={onGuess}
+                />
+              </PositionDivCentered>
+            </FortySixtyGrid>
+        );
+    }
 }
 
 export { SignInScreen, WinScreen, LoseScreen, PlayScreen };

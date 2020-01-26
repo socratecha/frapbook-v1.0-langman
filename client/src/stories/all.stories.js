@@ -206,4 +206,24 @@ storiesOf('Screens', module)
           />
         </div>
     ))
+    .add('PlayScreen', () => (
+        <div>
+          <h2>PlayScreen(usage, blanks, usedLetters, numBadGuesses, onGuess)</h2>
+          <ul>
+            <li>usage - the usage example provided as a clue</li>
+            <li>blanks - blanks and right guesses for the secret word</li>
+            <li>usedLetters - a string of letters that have been guessed</li>
+            <li>numBadGuesses - number of wrong guesses</li>
+            <li>onGuess - callback to use when guessing a letter</li>
+          </ul>
+          <h3>Typical Game</h3>
+          <PlayScreen
+            usage="All happy families are alike; each unhappy ______ is unhappy in its own way."
+            blanks="_a____"
+            usedLetters="acr"
+            numBadGuesses={2}
+            onGuess={action('guess')}
+          />
+        </div>
+    ))
 ;
