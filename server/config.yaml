@@ -1,0 +1,5 @@
+dev_lite:
+    DB: sqlite:///server/langman.db
+
+dev_postgres:
+    DB: postgresql://localhost:5432/langman
