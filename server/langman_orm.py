@@ -3,6 +3,8 @@ import json
 
 from sqlalchemy import create_engine, Column, types, MetaData, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker, relationship
+from unidecode import unidecode
 
 from .util import date_to_ordinal
 
@@ -46,6 +48,8 @@ class User(base_games):
     total_time     = Column(types.Interval)
     avg_time       = Column(types.Interval)
 
+    # TODO: fix this
+    # games          = relationship('Game', foreign_keys='Game.user_id')
     def _incr_json_field(self, field, key):
         '''Increment the value of self.``field``[``key``] by one where 
         ``field`` is a JSON text string. (Does not commit.)'''
@@ -88,13 +92,17 @@ class Game(base_games):
     '''
     __tablename__ = 'games'
     game_id     = Column(types.String(length=38), primary_key=True)
-    player      = Column(types.String(length=38), nullable=False)
-    usage_id    = Column(types.Integer, nullable=False)
+    player      = Column(types.String(length=38), ForeignKey(User.user_id), nullable=False)
+    usage_id    = Column(types.Integer, nullable=False) # no foreignkey across DBs
     guessed     = Column(types.String(length=30), default='')
     reveal_word = Column(types.String(length=25), nullable=False)
     bad_guesses = Column(types.Integer)
     start_time  = Column(types.DateTime)
     end_time    = Column(types.DateTime)
+
+    # TODO: update langman_orm to use relationships correctly
+    # user = relationship('User', foreign_keys='Friend.user_id')
+    # friend = relationship('User', foreign_keys='Friend.friend_id')
 
     def _result(self):
         '''Return the result of the game: lost, won, or active'''
@@ -105,15 +113,39 @@ class Game(base_games):
         else:
             return 'active'
 
-    def _to_dict(self):
+    def _to_dict(self, old_dict=None):
         '''Convert the game into a dictionary suitable for JSON serialization
 
         Special attention is paid to DateTime fields using the
         date_to_ordinals function.'''
-        as_dict = { k:v for k,v in self.__dict__.items()
-                    if not k.startswith('_') }
+        as_dict = { k:v for k,v in self.__dict__.items() if not k.startswith('_') }
         as_dict['result'] = self._result()
         as_dict['start_time'] = date_to_ordinal(as_dict.get('start_time'))
         as_dict['end_time'] = date_to_ordinal(as_dict.get('end_time'))
+
+        if old_dict is not None:
+            print('checking new dict vs old dict in game class')
+            assert ( (as_dict['player'] == old_dict['player']) and
+                     (as_dict['usage_id'] == old_dict['usage_id']) and
+                     (old_dict['result'] == 'active') and 
+                     (as_dict['guessed'].startswith(old_dict['guessed'])) and
+                     (len(as_dict['guessed']) - len(old_dict['guessed']) in (0,1)) ), \
+                     'Invalid game state update from {} to {}'.format(old_dict, as_dict)
+        self._check_consistent()
+
         return as_dict
-    
+
+    def _check_consistent(self):
+        '''Test record to make sure ``guessed`` and ``reveal_word`` are
+        consistent'''
+        dec_reveal = unidecode(self.reveal_word)
+        good_guesses = set([ l for l in self.guessed if l in dec_reveal ])
+        bad_guesses = set([ l for l in self.guessed if l not in dec_reveal ])
+        result = self._result()
+        assert ( (len(bad_guesses) == self.bad_guesses) and
+                 (len(bad_guesses.intersection(dec_reveal)) == 0) and
+                 (result in ('lost', 'won', 'active')) and
+                 (self.bad_guesses <= 6) and
+                 ((self.bad_guesses == 6) or (result in ('active', 'won'))) ), \
+                'Invalid game state: {} {} {}'.format(good_guesses, bad_guesses, self.reveal_word)
+        

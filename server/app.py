@@ -8,6 +8,7 @@ from sqlalchemy.orm import sessionmaker
 from flask_restplus import Resource, Api, Namespace
 from flask_cors import CORS
 from sqlalchemy.sql import func
+from unidecode import unidecode
 
 from .util import get_config
 from .langman_orm import Usage, User, Game
@@ -146,6 +147,7 @@ class OneGame(Resource):
             games_api.abort(404, 'Game with id {} does not exist'.format(game_id))
         if game._result() != 'active':
             games_api.abort(403, 'Game with id {} is over'.format(game_id))
+        old_dict = game._to_dict()       # NEW LINE IN UPDATE
         if ('letter' not in games_api.payload or
             not games_api.payload['letter'].isalpha() or
             len(games_api.payload['letter']) != 1):
@@ -157,9 +159,10 @@ class OneGame(Resource):
             games_api.abort(403, 'Letter {} was already guessed'.format(letter))
         game.guessed = game.guessed + letter
         usage  = g.usage_db.query(Usage).filter(Usage.usage_id == game.usage_id).one()
-        if letter in usage.secret_word.lower():
-            game.reveal_word = ''.join([l if l.lower() in game.guessed else '_'
-                                        for l in usage.secret_word])
+        if letter in unidecode(usage.secret_word.lower()):
+            game.reveal_word = ''.join([
+                l if unidecode(l.lower()) in game.guessed else '_'
+                for l in usage.secret_word])
         else:
             game.bad_guesses += 1
             
@@ -171,7 +174,7 @@ class OneGame(Resource):
             user._game_ended(outcome, game.end_time - game.start_time)            
 
         # return the modified game state
-        game_dict = game._to_dict()
+        game_dict = game._to_dict(old_dict)
         game_dict['usage']  = usage.usage.format(word='_'*len(usage.secret_word))
         game_dict['lang']   = usage.language
         game_dict['source'] = usage.source
