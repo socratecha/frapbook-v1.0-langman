@@ -162,4 +162,20 @@ storiesOf('Screens', module)
           <SignInScreen clickStart={action('start-game')}/>
         </div>
     ))
+    .add('WinScreen', () => (
+        <div>
+          <h2>WinScreen(lang, playAgain, clickQuit)</h2>
+          <ul>
+            <li>lang - the language in which the last game was played</li>
+            <li>clickPlayAgain - callback taking the new language choice</li>
+            <li>clickQuit - callback to quit playing</li>
+          </ul>
+          <h3>Expecting English</h3>
+          <WinScreen lang="en" clickPlayAgain={action('play-again')}
+                     clickQuit={action('quit-game')}/>
+          <h3>Expecting Spanish</h3>
+          <WinScreen lang="es" clickPlayAgain={action('play-again')}
+                     clickQuit={action('quit-game')}/>
+        </div>
+    ))
 ;
