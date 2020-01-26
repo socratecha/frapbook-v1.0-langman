@@ -99,32 +99,44 @@ const ActionButton = styled.button`
 class StartForm extends Component {
     constructor(props) {
         super(props);
-        this.state = { nameValue: "", langValue: "en" };
+        this.state = { nameValue: "", passwordValue: "",
+                       registerNewAccount:false, langValue: "en" };
         this.onNameChange = this.onNameChange.bind(this);
+        this.onPasswordChange = this.onPasswordChange.bind(this);
+        this.onNewAccountChange = this.onNewAccountChange.bind(this);
         this.onLangChange = this.onLangChange.bind(this);
         this.clickWrapper = this.clickWrapper.bind(this);
     };
 
     onNameChange(event) {
         this.setState({ nameValue: event.target.value });
-    };
+    }
 
+    onPasswordChange(event) {
+        this.setState({ passwordValue: event.target.value });
+    }
+
+    onNewAccountChange(event) {
+        this.setState({ registerNewAccount: event.target.checked });
+    }
+    
     onLangChange(event) {
         this.setState({ langValue: event.target.value });
-    };
+    }
 
     clickWrapper(event) {
-        const { nameValue, langValue } = this.state;
-        this.props.clickStart(nameValue, langValue);
+        const { nameValue, passwordValue, registerNewAccount, langValue } = this.state;
+        this.props.clickStart(nameValue, passwordValue, registerNewAccount, langValue);
     };
     
     render() {
-        const { clickWrapper, onNameChange, onLangChange } = this;
-        const { nameValue, langValue } = this.state;
+        const { clickWrapper, onNameChange, onPasswordChange,
+                onNewAccountChange, onLangChange } = this;
+        const { nameValue, passwordValue, registerNewAccount, langValue } = this.state;
                 
         return <div>
                  <form>
-                   <label htmlFor="nameInput">Enter your name</label>
+                   <label htmlFor="name">Enter your name</label>
                    <FormInput
                      value={nameValue}
                      type="text"
@@ -132,6 +144,21 @@ class StartForm extends Component {
                      onChange={onNameChange}
                    />
                    <br/>
+                   <label htmlFor="password">Password</label>
+                   <FormInput
+                     value={passwordValue}
+                     type="password"
+                     name="password"
+                     onChange={onPasswordChange}
+                   />
+                   <br/>
+                   Registering a new account?&nbsp;
+                   <FormInput
+                     checked={registerNewAccount}
+                     type="checkbox"
+                     onChange={onNewAccountChange}
+                   />
+                   <br />
                    <label htmlFor="languageInput">Choose a Language</label>
                    <FormSelect
                      onChange={onLangChange}

@@ -97,4 +97,14 @@ class UsageAndBlanks extends Component {
     }
 }
 
-export { Banner, ResultBanner, UsageAndBlanks };
+class FlashMessage extends Component {
+    render() {
+        const { flashMessage } = this.props;
+        return (
+            (flashMessage) ? (
+                <p>{ flashMessage }</p>
+            ) : ''
+        );
+    }
+}
+export { Banner, ResultBanner, UsageAndBlanks, FlashMessage };

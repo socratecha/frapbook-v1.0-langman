@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 
 import { ButtonPanel, StartForm, PlayAgainPanel } from './buttons';
-import { Banner, ResultBanner, UsageAndBlanks } from './components';
+import { Banner, ResultBanner, UsageAndBlanks, FlashMessage } from './components';
 import { Gallows } from './gallows';
 
 import { keyframes } from 'styled-components';
@@ -31,7 +31,7 @@ const PositionDivCentered = styled(PositionDiv)`
 
 class SignInScreen extends Component {
     render() {
-        const { clickStart } = this.props;
+        const { clickStart, flashMessage } = this.props;
         return (
             <FortySixtyGrid>
               <FullWidthDiv spacer>
@@ -41,6 +41,7 @@ class SignInScreen extends Component {
                 <Gallows badGuesses={3}/>
               </PositionDivCentered>
               <PositionDiv row={2} column={2}>
+                <FlashMessage flashMessage={flashMessage} />
                 <StartForm clickStart={clickStart}/>
               </PositionDiv>
             </FortySixtyGrid>
@@ -69,7 +70,7 @@ const WinResultsDiv = styled(FullWidthDiv)`
 
 class WinScreen extends Component {
     render() {
-        const { lang, clickPlayAgain, clickQuit } = this.props;
+        const { lang, clickPlayAgain, clickQuit, flashMessage } = this.props;
         return (
             <FortySixtyGrid>
               <FullWidthDiv>
@@ -79,6 +80,7 @@ class WinScreen extends Component {
                 <ResultBanner winResult={true}/>
               </WinResultsDiv>
               <PositionDivCentered row={3} column={"1 / 3"}>
+                <FlashMessage flashMessage={flashMessage}/>
                 <PlayAgainPanel
                   lang={lang}
                   clickPlayAgain={clickPlayAgain}
@@ -117,7 +119,7 @@ const LoseResultDiv = styled.div`
 `;
 class LoseScreen extends Component {
     render() {
-        const { usage, blanks } = this.props;
+        const { usage, blanks, flashMessage } = this.props;
         const { lang, clickPlayAgain, clickQuit } = this.props;
         return (
             <FortySixtyGrid style={{backgroundColor: '#ccc'}}>
@@ -142,6 +144,7 @@ class LoseScreen extends Component {
                 />
               </PositionDiv>
               <PositionDivCentered row={4} column={"1 / 3"}>
+                <FlashMessage flashMessage={flashMessage}/>
                 <PlayAgainPanel
                   lang={lang}
                   clickPlayAgain={clickPlayAgain}
@@ -154,7 +157,7 @@ class LoseScreen extends Component {
 }
 class PlayScreen extends Component {
     render() {
-        const { usage, blanks, usedLetters, numBadGuesses, onGuess } = this.props;
+        const { usage, blanks, usedLetters, numBadGuesses, onGuess, flashMessage } = this.props;
         return (
             <FortySixtyGrid>
               <FullWidthDiv>
@@ -168,6 +171,7 @@ class PlayScreen extends Component {
                 <Gallows badGuesses={numBadGuesses}/>
               </PositionDiv>
               <PositionDiv row={2} column={2}>
+                <FlashMessage flashMessage={flashMessage}/>
                 <UsageAndBlanks
                   usage={usage}
                   blanks={blanks}
