@@ -5,6 +5,7 @@ import { action } from '@storybook/addon-actions';
 import { addDecorator } from '@storybook/react';
 
 import { LetterButton, ButtonPanel, StartForm, PlayAgainPanel } from '../buttons';
+import { Banner, ResultBanner, UsageAndBlanks } from '../components';
 import { GlobalStyle } from '../fonts';
 addDecorator(s => <><GlobalStyle />{s()}</>);
 
@@ -74,3 +75,22 @@ storiesOf('Button-related Components', module)
     ))
 ;
 
+storiesOf('Banners and Displays', module)
+    .add('Banner', () => (
+        <div>
+          <h2>Banner(full)</h2>
+            <p>This component includes both Banner and ShortTitle
+            from the design docs.</p>
+          <ul>
+            <li>full - truthy means wide title is shown with subtitle,
+                       otherwise shows just short title</li>
+          </ul>
+          <h3>Full Title</h3>
+          <Banner full={true}/>
+          <h3>Short Title</h3>
+          <Banner full={false}/>
+        </div>
+    ))
+    .add('ResultBanner', () => <ResultBanner />)
+    .add('UsageAndBlanks', () => <UsageAndBlanks />)
+;
