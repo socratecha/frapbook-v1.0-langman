@@ -26,7 +26,21 @@ storiesOf('Button-related Components', module)
                         makeGuess={action('click-B')}/>
         </div>
     ))
-    .add('ButtonPanel', () => <ButtonPanel />)
+    .add('ButtonPanel', () => (
+        <div>
+          <h2>ButtonPanel(language, onGuess)</h2>
+          <ul>
+            <li>onGuess - a callback that takes the guessed letter</li>
+            <li>usedLetters - string of already-guessed letters</li>
+          </ul>
+          <h3>Used Letters rlstine</h3>
+          <ButtonPanel onGuess={action('guessed')} usedLetters="rlstine"/>
+          <h3>Used Letters senorita</h3>
+          <ButtonPanel onGuess={action('guessed')} usedLetters="senorita"/>
+          <h3>Used letters mondieu</h3>
+          <ButtonPanel onGuess={action('guessed')} usedLetters="mondieu"/>
+        </div>
+    ))
     .add('StartForm', () => <StartForm />)
     .add('PlayAgainPanel', () => <PlayAgainPanel />)
 ;

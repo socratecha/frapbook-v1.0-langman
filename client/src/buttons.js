@@ -29,9 +29,48 @@ class LetterButton extends Component {
         );
     }
 }
+const BoxPanel = styled.div`
+    display: inline-block;
+    font-size: 30px;
+    background-color: #444;
+    color: #fff;
+    border-radius: 26px;
+    padding: 20px;
+    margin: 10px;
+`;
+
 class ButtonPanel extends Component {
+    alphabet = ['A','B','C','D','E','F','G','H','I','J','K','L','M',
+	        'N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+
+    makeGuess(letter) {
+        return () => {
+            this.props.onGuess(letter);
+        };
+    }
+    
+    constructor(props) {
+        super(props);
+        this.makeGuess = this.makeGuess.bind(this);
+    }
+    
     render() {
-        return <div>Button Panel</div>;
+        const usedLetters = this.props.usedLetters.toUpperCase();
+        const letterButtons = this.alphabet.map(
+            (letter) => {
+                return <LetterButton
+                         key={letter}
+                         letter={letter}
+                         wasUsed={usedLetters.includes(letter)}
+                         makeGuess={this.makeGuess(letter)}
+                       />;
+            }
+        );
+        return (
+            <BoxPanel>
+              { letterButtons }
+            </BoxPanel>
+        );
     }
 }
 
