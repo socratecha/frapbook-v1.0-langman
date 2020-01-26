@@ -178,4 +178,32 @@ storiesOf('Screens', module)
                      clickQuit={action('quit-game')}/>
         </div>
     ))
+    .add('LoseScreen', () => (
+        <div>
+          <h2>LoseScreen()</h2>
+          <ul>
+            <li>usage - the usage example from the game just ending</li>
+            <li>blanks - the word to be guessed for the game just ending</li>
+            <li>lang - the language in which the last game was played</li>
+            <li>clickPlayAgain - callback taking the new language choice</li>
+            <li>clickQuit - callback to quit playing</li>
+          </ul>
+          <h3>English Example</h3>
+          <LoseScreen
+            usage="Therefore, send not to know for whom the bell _____, it tolls for thee."
+            blanks="tolls"
+            lang="en"
+            clickPlayAgain={action('play-again')}
+            clickQuit={action('quit-game')}
+          />
+          <h3>Spanish Example</h3>
+          <LoseScreen
+            usage="Los _________ nunca abandonan y los que abandonan nunca ganan."
+            blanks="ganadores"
+            lang="es"
+            clickPlayAgain={action('play-again')}
+            clickQuit={action('quit-game')}
+          />
+        </div>
+    ))
 ;

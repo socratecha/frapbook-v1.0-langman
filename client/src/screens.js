@@ -89,8 +89,68 @@ class WinScreen extends Component {
         );
     }           
 }
+
+const dropSwingKeyframes = keyframes`
+    0%  { transform: translateY(-300px); }
+    5%  { transform: translateY(-290px); }
+    10% { transform: translateY(-250px); }
+    15% { transform: translateY(-160px); }
+    20% { transform: translateY(   0px); }
+    30% { transform: rotate(-16deg); transform-origin: 50% -100%; }
+    50% { transform: rotate( 12deg); transform-origin: 50% -100%; }
+    70% { transform: rotate( -8deg); transform-origin: 50% -100%; }
+    90% { transform: rotate(  4deg); transform-origin: 50% -100%; }
+   100% { transform: rotate(  0deg); transform-origin: 50% -100%; }
+`;
+
+const LoseResultDiv = styled.div`
+    text-align: center;
+    animation-name: ${dropSwingKeyframes};
+    animation-delay: 0.2s;
+    animation-duration: 2.0s;
+    animation-timing-function: linear;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-direction: normal;
+    grid-column: 2;
+    grid-row: 2;
+`;
 class LoseScreen extends Component {
-    render() { return <h2>Lose Screen</h2>; }
+    render() {
+        const { usage, blanks } = this.props;
+        const { lang, clickPlayAgain, clickQuit } = this.props;
+        return (
+            <FortySixtyGrid style={{backgroundColor: '#ccc'}}>
+              <FullWidthDiv>
+                <Banner full={false}/>
+              </FullWidthDiv>
+              <PositionDiv
+                row={"2 / 4"}
+                column={1}
+                style={{textAlign: 'right', margin: 'auto'}}
+              >
+                <Gallows badGuesses={6}/>
+              </PositionDiv>
+              <LoseResultDiv>
+                <ResultBanner winResult={false}/>
+              </LoseResultDiv>
+              <PositionDiv row={3} column={2}>
+                <UsageAndBlanks
+                  usage={usage}
+                  blanks={blanks}
+                  showBlanks={false}
+                />
+              </PositionDiv>
+              <PositionDivCentered row={4} column={"1 / 3"}>
+                <PlayAgainPanel
+                  lang={lang}
+                  clickPlayAgain={clickPlayAgain}
+                  clickQuit={clickQuit}
+                />
+              </PositionDivCentered>
+            </FortySixtyGrid>
+        );
+    }           
 }
 class PlayScreen extends Component {
     render() { return <h2>Play Screen</h2>; }
