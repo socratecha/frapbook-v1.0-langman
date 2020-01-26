@@ -91,6 +91,17 @@ storiesOf('Banners and Displays', module)
           <Banner full={false}/>
         </div>
     ))
-    .add('ResultBanner', () => <ResultBanner />)
+    .add('ResultBanner', () => (
+        <div>
+          <h2>Result Banner</h2>
+          <ul>
+            <li>winResult - truthy means the player won, otherwise the player lost</li>
+          </ul>
+          <h3>Player Won the Game</h3>
+          <ResultBanner winResult={true}/>
+          <h3>Player Lost the Game</h3>
+          <ResultBanner winResult={false}/>
+        </div>
+    ))
     .add('UsageAndBlanks', () => <UsageAndBlanks />)
 ;

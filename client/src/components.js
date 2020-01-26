@@ -40,11 +40,21 @@ class Banner extends Component {
     }
 }
 
+const BlockFontDiv = styled.div`
+    background-color: ${props => props.winResult ? "#ccc" : "transparent"};
+    font-family: 'Passion One', sans-serif;
+    font-size: 4em;
+`;
+
 class ResultBanner extends Component {
     render() {
-        return <div>Result Banner</div>;
+        const { winResult } = this.props;
+        return <BlockFontDiv>
+                 { winResult ? "You Won!" : "You Lost" }
+               </BlockFontDiv>;
     }
 }
+
 class UsageAndBlanks extends Component {
     render() {
         return <div>Usage And Blanks</div>;
