@@ -16,6 +16,7 @@ flask-cors = "*"
 psycopg2-binary = "*"
 unidecode = "*"
 flask-jwt-extended = "*"
+gunicorn = "*"
 
 [requires]
 python_version = "3.7"

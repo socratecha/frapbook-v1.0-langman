@@ -3,7 +3,7 @@ import { GlobalStyle } from './fonts';
 import axios from 'axios';
 import { SignInScreen, PlayScreen, WinScreen, LoseScreen } from './screens';
 
-const APIURL = 'http://localhost:5000/';
+const APIURL = '';
 
 class App extends Component {
     constructor(props) {

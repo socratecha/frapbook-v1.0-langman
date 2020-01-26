@@ -7,3 +7,8 @@ dev_postgres:
     DB_USAGE: sqlite:///server/usages.db
     DB_GAMES: postgresql://localhost:5432/langman
     DB_AUTH:  postgresql://localhost:5432/langman
+
+heroku:
+    DB_USAGE: sqlite:///server/usages.db
+    DB_GAMES: env:DATABASE_URL
+    DB_AUTH:  env:DATABASE_URL
